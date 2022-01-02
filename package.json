@@ -1,0 +1,14 @@
+{
+  "name": "router2021",
+  "version": "0.0.1",
+  "description": "Cloudflare general assignment 2021",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "yahsieh",
+  "license": "GPLv2",
+  "dependencies": {
+    "itty-router": "^2.4.8"
+  }
+}
