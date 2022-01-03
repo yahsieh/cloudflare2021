@@ -57,10 +57,27 @@ router.post("/posts", async request => {
   if (request.headers.get("Content-Type") !== "application/json") {
     return new Response("syntax error", {status: 400})
   }
+  let oldPosts = await MY_KV.get('posts', {type: "json"})
   let reqData = await request.json()
-  console.log(reqData)
+  oldPosts.push(reqData[0])
   // Serialise the JSON to a string.
-  const post = JSON.stringify(reqData, null, 2)
+  const post = JSON.stringify(oldPosts, null, 2)
+  console.log(post)
+  await MY_KV.put('posts', post)
+  return new Response("write success")
+})
+
+router.post("/delete", async request => {
+  // Create a base object with some fields.
+  if (request.headers.get("Content-Type") !== "application/json") {
+    return new Response("syntax error", {status: 400})
+  }
+  let oldPosts = await MY_KV.get('posts', {type: "json"})
+  let reqData = await request.json()
+  oldPosts.push(reqData[0])
+  // Serialise the JSON to a string.
+  const post = JSON.stringify(oldPosts, null, 2)
+  console.log(post)
   await MY_KV.put('posts', post)
   return new Response("write success")
 })
@@ -72,6 +89,11 @@ router.get("/list", async () => {
       "Content-Type": "application/json"
     }
   })
+})
+
+router.get("/clearall", async () => {
+  await MY_KV.put('posts', '[]')
+  return new Response("delete success")
 })
 
 
